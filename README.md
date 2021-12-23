@@ -21,3 +21,5 @@ The user provides a description of a meal in a natural language format. Upon cli
 
 ### Demo Video
 
+https://user-images.githubusercontent.com/85018020/147299220-d2770838-feaf-42d2-a2c3-6b63cc902f69.mp4
+

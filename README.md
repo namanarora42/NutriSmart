@@ -7,7 +7,7 @@ NutriSmart is powered by the [Nutritionix API](https://www.nutritionix.com/busin
 
 REST principles are followed in the development. All data processing (parsing, formatting, etc.) is done on the servlet to keep local CPU load at a minimum. 
 
-Data is transerred between local storage and the web service i JSON format. 
+Data is transerred between local storage and the web service in JSON format. 
  
 ## Dashboard
 

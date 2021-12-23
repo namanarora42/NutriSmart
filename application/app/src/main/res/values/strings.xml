@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NutriSmart</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="instruction">Enter a description of a meal</string>
+    <string name="fetching">Results are being fetched</string>
+    <string name="allResponses">%1$s</string>
+    <string name="submit">Submit</string>
+    <string name="invalidInput">Please enter a valid input</string>
+    <string name="clear">Clear</string>
+    <string name="internetError">Please check your internet connection</string>
+</resources>

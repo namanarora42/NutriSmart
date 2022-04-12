@@ -14,7 +14,8 @@ import java.nio.charset.StandardCharsets;
  * This is the class that connects to the third party API and brings in the information that the user has requested.
  */
 public class NutriSmart {
-    JSONObject request, response;
+    JSONObject request, response, rawResponse;
+    long responseTime;
 
     /**
      * Return the stored response
@@ -24,6 +25,29 @@ public class NutriSmart {
         return response;
     }
 
+    /**
+     * Returns the raw response from the API
+     * @return raw API's JSON response
+     */
+    public JSONObject getRawResponse() {
+        return rawResponse;
+    }
+
+    /**
+     * Return the response time
+     * @return time taken between receiving user input to returning output fetched from API
+     */
+    public long getResponseTime() {
+        return responseTime;
+    }
+
+    /**
+     * Get the request JSON object
+     * @return JSON object
+     */
+    public JSONObject getRequest() {
+        return request;
+    }
 
     /**
      * Sets up the class instance for the client's request
@@ -31,6 +55,7 @@ public class NutriSmart {
      */
     public void setup(JSONObject request) {
         this.request = request;
+        this.responseTime = 0;
     }
 
     /**
@@ -38,11 +63,15 @@ public class NutriSmart {
      * The useful info is marshalled into a new JSON object that can be passed on to the client
      */
     public void performQuery() {
-        if (request.getString("query").equalsIgnoreCase("test")) { //todo remove testing code
-            this.response= new JSONObject().put("error", "Call successful");
-            return;
-        }
+        long startTime = System.currentTimeMillis(); //track time taken to process
         JSONObject apiResponse = callAPI(request); //makes a call to the API with user query
+        this.rawResponse = apiResponse;
+        if (apiResponse.has("error")) { //if an error was reported by the API
+            this.response = apiResponse;
+            long endTime = System.currentTimeMillis();
+            this.responseTime = endTime - startTime; //track time taken to process
+            return; //don't proceed
+        }
         JSONObject appResponse = new JSONObject(); //setting up an object to be sent back to the requesting client
         JSONArray calorieInfo = new JSONArray();
         JSONArray imageInfo = new JSONArray();
@@ -72,6 +101,8 @@ public class NutriSmart {
         appResponse.put("foods", calorieInfo);
         appResponse.put("images", imageInfo);
         this.response = appResponse;
+        long endTime = System.currentTimeMillis();
+        this.responseTime = endTime - startTime; //track time taken to process
     }
 
     /**
